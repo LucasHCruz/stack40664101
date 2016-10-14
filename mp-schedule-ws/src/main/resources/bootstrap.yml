@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: mp-schedule
+  cloud:
+     config:
+        uri: https://ws-config.cnova.com.br
+        label: mp-local
+        enabled: false

@@ -1,0 +1,53 @@
+info:
+  name: @project.name@
+  version: @project.version@
+
+banner:
+  location: classpath:banner.txt
+
+server:
+    port: 7400
+    display-name: mp-schedule
+    
+    
+# Exemplo de conexão com replica set:
+# spring.data.mongodb.uri: mongodb://example1.com,example2.com,example3.com/?readPreference=secondary
+spring:
+  data:
+    mongodb:
+        uri: @mongo.connection@
+
+        
+eureka:
+  client:
+    enabled: false
+
+logging:
+  file: logs/mp_schedule.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    br:
+      com:
+        cnova: INFO
+    org:
+      springframework:
+        web: INFO
+
+messages:
+  basename: messages
+  default:
+    country: BR
+    language: PT
+    encoding: UTF-8
+
+ff4j:
+  webapi:
+    authentication: false
+    authorization: false
+
+mpschedule:
+  uri:
+    apifront: "http://localhost:7300/testIntegration/internal"
+    tdca: "http://localhost:7300/testIntegration/internal"
