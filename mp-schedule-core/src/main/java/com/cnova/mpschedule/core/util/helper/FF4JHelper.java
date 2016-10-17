@@ -12,11 +12,9 @@ public class FF4JHelper {
 
     //FF4J Feature Configuration
     //Default implementation
-    public static final String RIGHT_NOW_SERVICE = "right-now-service";
-    public static final String TDCA_SERVICE = "tdca-service";
+    public static final String SCHEDULE_SERVICE = "schedule-service";
 
     //Alternative implementation
-    public static final String RIGHT_NOW_SERVICE_ALTERNATIVE = "right-now-service-alternative";
-    public static final String TDCA_SERVICE_ALTERNATIVE = "tdca-service-alternative";
+    public static final String SCHEDULE_SERVICE_ALTERNATIVE = "schedule-service-alternative";
     
 }

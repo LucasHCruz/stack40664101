@@ -41,8 +41,7 @@ public class FF4jConfiguration implements FF4JProvider {
         ff4j.setFeatureStore(featureStore);
         
         //Create Feature
-        createFeatureStore(FF4JHelper.RIGHT_NOW_SERVICE, ff4j, featureStore);
-        createFeatureStore(FF4JHelper.TDCA_SERVICE, ff4j, featureStore);
+        createFeatureStore(FF4JHelper.SCHEDULE_SERVICE, ff4j, featureStore);
 
         return ff4j;
     }
