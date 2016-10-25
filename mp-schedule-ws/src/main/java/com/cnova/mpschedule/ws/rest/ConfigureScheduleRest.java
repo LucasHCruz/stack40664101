@@ -20,7 +20,7 @@ public class ConfigureScheduleRest {
     @Qualifier(FF4JHelper.SCHEDULE_SERVICE)
     private ScheduleService scheduleService;
     
-	@RequestMapping(method=RequestMethod.PUT,
+	@RequestMapping(method=RequestMethod.GET,
 		produces=MediaType.APPLICATION_JSON_VALUE)
 	public String configureSchedule(String teste){
 		String resultado = "TESTE OK: " + teste + "\n";

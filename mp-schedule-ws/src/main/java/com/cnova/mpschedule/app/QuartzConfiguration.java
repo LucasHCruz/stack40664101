@@ -2,8 +2,11 @@ package com.cnova.mpschedule.app;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.quartz.CronTrigger;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
@@ -12,9 +15,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import com.cnova.mpschedule.core.job.MyJobTwo;
+
 @Configuration 
-@ComponentScan("com.concretepage") 
 public class QuartzConfiguration {
+    /*
     @Bean
     public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
         MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
@@ -32,6 +36,7 @@ public class QuartzConfiguration {
         stFactory.setRepeatCount(3);
         return stFactory;
     }
+
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean(){
         JobDetailFactoryBean factory = new JobDetailFactoryBean();
@@ -44,6 +49,7 @@ public class QuartzConfiguration {
         factory.setName("myjob");
         return factory;
     }
+    
     //Job is scheduled after every 1 minute 
     @Bean
     public CronTriggerFactoryBean cronTriggerFactoryBean(){
@@ -55,10 +61,15 @@ public class QuartzConfiguration {
         stFactory.setCronExpression("0 0/1 * 1/1 * ? *");
         return stFactory;
     }
+    */
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean() {
+        
+//        Trigger simpleTrigger = simpleTriggerFactoryBean().getObject();
+//        Trigger cronTrigger = cronTriggerFactoryBean().getObject();
+        
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(simpleTriggerFactoryBean().getObject(),cronTriggerFactoryBean().getObject());
+        //scheduler.setTriggers(simpleTrigger,cronTrigger);
         return scheduler;
     }
 } 

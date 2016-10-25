@@ -17,10 +17,12 @@ spring:
     mongodb:
         uri: @mongo.connection@
 
-        
-eureka:
+eureka:  
   client:
-    enabled: false
+    serviceUrl:
+      defaultZone: http://dev.mktplace:7700/eureka/
+  instance:
+    preferIpAddress: true
 
 logging:
   file: logs/mp_schedule.log

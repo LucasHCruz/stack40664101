@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
-public class MyJobTwo extends QuartzJobBean {
+public class MyJobTest extends QuartzJobBean {
     public static final String COUNT = "count";
     
     @Setter
