@@ -15,7 +15,9 @@ public class Application {
                 SwaggerConfiguration.class,
                 MessageResourceConfiguration.class,
                 FeignConfiguration.class,
-                FF4jConfiguration.class
+                FF4jConfiguration.class,
+                QuartzConfiguration.class,
+                EurekaClientConfiguration.class
                 ).run(args);
     }
 }

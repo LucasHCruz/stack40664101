@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cnova.mpschedule.core.service.RightNowService;
+import com.cnova.mpschedule.core.service.ScheduleService;
 import com.cnova.mpschedule.core.util.helper.FF4JHelper;
 
 
 
 @RestController
 @RequestMapping("teste")
-public class TestRest {
+public class ConfigureScheduleRest {
     
     @Autowired
-    @Qualifier(FF4JHelper.RIGHT_NOW_SERVICE)
-    private RightNowService apiFrontService;
+    @Qualifier(FF4JHelper.SCHEDULE_SERVICE)
+    private ScheduleService scheduleService;
     
 	@RequestMapping(method=RequestMethod.GET,
 		produces=MediaType.APPLICATION_JSON_VALUE)
-	public String teste(String teste){
+	public String configureSchedule(String teste){
 		String resultado = "TESTE OK: " + teste + "\n";
 		
-		resultado += apiFrontService.teste();
+		resultado += scheduleService.teste();
 		
 		return resultado;
 	}

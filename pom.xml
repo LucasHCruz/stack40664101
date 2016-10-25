@@ -34,6 +34,7 @@
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <ff4j.version>1.5</ff4j.version>
+        <quartz.version>2.2.3</quartz.version>
 
         <!-- SPRING BOOT OPTIONS -->
         <tomcat.version>8.0.22</tomcat.version>
@@ -43,6 +44,7 @@
         <start-class>com.cnova.mpschedule.app.Application</start-class>
         <springfox-swagger.version>2.4.0</springfox-swagger.version>
         <spring-boot-starter-test>1.4.0.RELEASE</spring-boot-starter-test>
+        <spring-context-support.version>4.3.3.RELEASE</spring-context-support.version>
 
         <!-- test -->
         <maven.test.failure.ignore>false</maven.test.failure.ignore>
@@ -60,6 +62,11 @@
                 <version>Brixton.SR5</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring-context-support.version}</version>
             </dependency>
 
             <!-- Swagger -->
@@ -149,7 +156,13 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
-
+            
+            <!-- QUARTZ -->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
+            </dependency>
 
             <!-- tests -->
             <dependency>
@@ -206,8 +219,8 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <mongo.connection>mongodb://mongo_mp_schedule:123@10.128.135.30:27017/mp-schedule</mongo.connection>
+            <properties>          
+                <mongo.connection>mongodb://mongo_mp_schedule:123@localhost:27017/mp-schedule</mongo.connection>
                 <url.integracao.front>http://COLOCAR_URL_FRONT</url.integracao.front>
 
                 <unit-tests.skip>false</unit-tests.skip>
@@ -220,7 +233,7 @@
                 <module>mp-schedule-integration-test</module>
             </modules>
             <properties>
-                <mongo.connection>mongodb://mongo_mp_schedule:123@10.128.135.30:27017/mp-schedule-itest</mongo.connection>
+                <mongo.connection>mongodb://mongo_mp_schedule:123@localhost:27017/mp-schedule-itest</mongo.connection>
                 <url.integracao.front>http://COLOCAR_URL_FRONT</url.integracao.front>
 
                 <unit-tests.skip>true</unit-tests.skip>
