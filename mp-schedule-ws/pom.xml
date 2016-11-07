@@ -22,6 +22,12 @@
         <dependency>
             <groupId>org.ff4j</groupId>
             <artifactId>ff4j-store-mongodb</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongo-java-driver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <artifactId>ff4j-aop</artifactId>

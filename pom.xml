@@ -164,6 +164,12 @@
                 <version>${quartz.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.novemberain</groupId>
+                <artifactId>quartz-mongodb</artifactId>
+                <version>2.0.0-rc3</version>
+            </dependency>
+
             <!-- tests -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -274,10 +280,17 @@
 
     <!-- REPOSITORY -->
     <repositories>
+        <!-- Spring -->
         <repository>
             <id>spring-releases</id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
+        </repository>
+
+        <!-- Quartz-MongoJobStore -->
+        <repository>
+            <id>michaelklishin</id>
+            <url>https://dl.bintray.com/michaelklishin/maven/</url>
         </repository>
     </repositories>
     <pluginRepositories>

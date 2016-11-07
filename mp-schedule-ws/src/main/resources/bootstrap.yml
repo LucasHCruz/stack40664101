@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mp-schedule
+    name: mp-schedule-local
   cloud:
      config:
         uri: https://ws-config.cnova.com.br

@@ -21,6 +21,7 @@ This project is responsible for schedule services of Marketplace.
 * Lombok
 * JGit-Flow
 * Slf4j
+* Quartz
 
 ## MongoDB Configuration
 ```javascript
@@ -42,7 +43,7 @@ This project is responsible for schedule services of Marketplace.
 
 ## Run Integration Test
 ```shell
-mvn integration-test -P integration
+mvn clean install -P integration
 ```
 
 

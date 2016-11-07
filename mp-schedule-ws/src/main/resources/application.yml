@@ -49,6 +49,19 @@ ff4j:
     authentication: false
     authorization: false
 
+#https://github.com/michaelklishin/quartz-mongodb
+#Use the MongoDB store
+org:
+    quartz:
+        jobStore:
+            class: com.novemberain.quartz.mongodb.MongoDBJobStore
+            mongoUri: @mongo.connection@
+            dbName: mp-schedule
+            collectionPrefix: quartz
+            jobDataAsBase64: false
+        threadPool:
+            threadCount: 1
+
 mpschedule:
   uri:
     apifront: "http://localhost:7300/testIntegration/internal"

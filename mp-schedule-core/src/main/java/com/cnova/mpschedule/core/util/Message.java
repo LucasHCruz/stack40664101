@@ -1,11 +1,11 @@
 package com.cnova.mpschedule.core.util;
 
-import java.util.List;
+import java.util.Locale;
 
 @SuppressWarnings("rawtypes")
 public interface Message {
 
 	String getMessage(String key);
-    String getMessage(String key, List objects);
-    String getMessage(String key, String locale);
+    String getMessage(String key, Object... objects);
+    String getMessage(String key, Locale locale);
 }
