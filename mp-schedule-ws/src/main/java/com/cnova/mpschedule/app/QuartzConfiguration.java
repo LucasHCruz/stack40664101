@@ -1,23 +1,60 @@
 package com.cnova.mpschedule.app;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.quartz.CronTrigger;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
+import com.cnova.mpschedule.core.factory.AutowiringSpringBeanJobFactory;
+import org.quartz.spi.JobFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
-import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
-import com.cnova.mpschedule.core.job.MyJobTwo;
+import java.util.Properties;
 
 @Configuration 
 public class QuartzConfiguration {
+
+    @Value("${org.quartz.jobStore.class}")
+    public String jobStoreClass;
+    @Value("${org.quartz.jobStore.mongoUri}")
+    public String mongoUri;
+    @Value("${org.quartz.jobStore.dbName}")
+    public String dbName;
+    @Value("${org.quartz.jobStore.collectionPrefix}")
+    public String collectionPrefix;
+    @Value("${org.quartz.jobStore.jobDataAsBase64}")
+    private String jobDataAsBase64;
+    @Value("${org.quartz.threadPool.threadCount}")
+    public String threadCount;
+
+    @Bean
+    public JobFactory jobFactory(ApplicationContext applicationContext) {
+
+        AutowiringSpringBeanJobFactory sampleJobFactory = new AutowiringSpringBeanJobFactory();
+        sampleJobFactory.setApplicationContext(applicationContext);
+        return sampleJobFactory;
+    }
+
+    @Bean
+    public SchedulerFactoryBean schedulerFactoryBean(ApplicationContext applicationContext) {
+
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+
+        factory.setOverwriteExistingJobs(true);
+        factory.setJobFactory(jobFactory(applicationContext));
+
+        Properties quartzProperties = new Properties();
+
+        quartzProperties.setProperty("org.quartz.jobStore.class", this.jobStoreClass);
+        quartzProperties.setProperty("org.quartz.jobStore.mongoUri", this.mongoUri);
+        quartzProperties.setProperty("org.quartz.jobStore.dbName", this.dbName);
+        quartzProperties.setProperty("org.quartz.jobStore.collectionPrefix", this.collectionPrefix);
+        quartzProperties.setProperty("org.quartz.jobStore.jobDataAsBase64", this.jobDataAsBase64);
+        quartzProperties.setProperty("org.quartz.threadPool.threadCount", this.threadCount);
+        factory.setQuartzProperties(quartzProperties);
+
+        return factory;
+    }
+
     /*
     @Bean
     public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
@@ -51,7 +88,7 @@ public class QuartzConfiguration {
     }
     
     //Job is scheduled after every 1 minute 
-    @Bean
+    @Bean("DezSecTrigger")
     public CronTriggerFactoryBean cronTriggerFactoryBean(){
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(jobDetailFactoryBean().getObject());

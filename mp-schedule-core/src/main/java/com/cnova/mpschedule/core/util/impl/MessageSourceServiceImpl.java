@@ -1,15 +1,12 @@
 package com.cnova.mpschedule.core.util.impl;
 
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.lang3.LocaleUtils;
+import com.cnova.mpschedule.core.util.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.cnova.mpschedule.core.util.Message;
+import java.util.Locale;
 
 
 @Service
@@ -26,14 +23,14 @@ public class MessageSourceServiceImpl implements Message {
     }
 
     @Override
-    public String getMessage(String key, List objects) {
+    public String getMessage(String key, Object[] objects) {
         Locale locale = LocaleContextHolder.getLocale();
-        return messages.getMessage(key, objects.toArray(), locale);
+        return messages.getMessage(key, objects, locale);
     }
 
     @Override
-    public String getMessage(String key, String locale) {
-        return messages.getMessage(key, null, LocaleUtils.toLocale(locale));
+    public String getMessage(String key, Locale locale) {
+        return messages.getMessage(key, null, locale);
     }
 
 }
