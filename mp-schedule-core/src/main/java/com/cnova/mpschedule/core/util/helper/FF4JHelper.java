@@ -12,9 +12,11 @@ public class FF4JHelper {
 
     //FF4J Feature Configuration
     //Default implementation
+    public static final String JOB_SERVICE = "job-service";
     public static final String SCHEDULE_SERVICE = "schedule-service";
 
     //Alternative implementation
+    public static final String JOB_ALTERNATIVE = "job-service-alternative";
     public static final String SCHEDULE_SERVICE_ALTERNATIVE = "schedule-service-alternative";
-    
+
 }
