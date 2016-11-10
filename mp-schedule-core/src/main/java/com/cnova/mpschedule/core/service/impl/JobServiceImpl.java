@@ -58,12 +58,12 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public void registerJob(JobDetailDTO job) {
-        List<String> errors = jobDetailDTOValidator.validateRegisterJob(job);
-        if (!errors.isEmpty()) {
-            throw new MpScheduleException(message.getMessage("job.register.fail"), errors);
-        }
-        JobDetail jobDetail = createJobDetail(job);
         try {
+            List<String> errors = jobDetailDTOValidator.validateRegisterJob(job);
+            if (!errors.isEmpty()) {
+                throw new MpScheduleException(message.getMessage("job.register.fail"), errors);
+            }
+            JobDetail jobDetail = createJobDetail(job);
             this.scheduler.addJob(jobDetail, false);
         } catch (SchedulerException e) {
             String erro = message.getMessage("job.register.fail", job.getKey().toString());

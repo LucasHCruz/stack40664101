@@ -20,14 +20,16 @@ public class JobDetailDTOValidator {
     @Autowired
     Scheduler scheduler;
 
-    public List<String> validateRegisterJob(JobDetailDTO jobDetailDTO){
+    public List<String> validateRegisterJob(JobDetailDTO jobDetailDTO) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
         verifyJobKey(jobDetailDTO, errors);
         verifyUrl(jobDetailDTO, errors);
+        verifyIfJobAlreadyExists(jobDetailDTO, errors);
 
         return errors;
     }
+
     public List<String> validateUpdateJob(JobDetailDTO jobDetailDTO) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
@@ -47,7 +49,7 @@ public class JobDetailDTOValidator {
         return errors;
     }
 
-    private void verifyJobKey(JobDetailDTO jobDetailDTO, List<String> errors) {
+    protected void verifyJobKey(JobDetailDTO jobDetailDTO, List<String> errors) {
         if(Strings.isNullOrEmpty(jobDetailDTO.getJobName())){
             errors.add(message.getMessage("required.field", "jobName"));
         }
@@ -57,14 +59,25 @@ public class JobDetailDTOValidator {
         }
     }
 
-    private void verifyUrl(JobDetailDTO jobDetailDTO, List<String> errors) {
+    protected void verifyUrl(JobDetailDTO jobDetailDTO, List<String> errors) {
         if(Strings.isNullOrEmpty(jobDetailDTO.getUrl())){
             errors.add(message.getMessage("required.field", "url"));
         }
     }
 
-    private void verifyIfJobExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
+    protected void verifyIfJobAlreadyExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
         if(Strings.isNullOrEmpty(jobDetailDTO.getGroupName()) || Strings.isNullOrEmpty(jobDetailDTO.getJobName())){
+            //não adiciona nenhum erro, porque o verifyJobKey() já adiciona os erros na lista.
+            return;
+        }
+        if(scheduler.checkExists(jobDetailDTO.getKey())){
+            errors.add(message.getMessage("job.already.exists", jobDetailDTO.getKey().toString()));
+        }
+    }
+
+    protected void verifyIfJobExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
+        if(Strings.isNullOrEmpty(jobDetailDTO.getGroupName()) || Strings.isNullOrEmpty(jobDetailDTO.getJobName())){
+            //não adiciona nenhum erro, porque o verifyJobKey() já adiciona os erros na lista.
             return;
         }
         if(!scheduler.checkExists(jobDetailDTO.getKey())){

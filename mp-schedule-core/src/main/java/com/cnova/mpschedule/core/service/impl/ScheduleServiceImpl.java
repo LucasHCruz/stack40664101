@@ -2,6 +2,7 @@ package com.cnova.mpschedule.core.service.impl;
 
 import com.cnova.mpschedule.core.dto.ScheduleDTO;
 import com.cnova.mpschedule.core.dto.TriggerDTO;
+import com.cnova.mpschedule.core.dto.validator.ScheduleDTOValidator;
 import com.cnova.mpschedule.core.exception.MpScheduleException;
 import com.cnova.mpschedule.core.service.ScheduleService;
 import com.cnova.mpschedule.core.util.Message;
@@ -30,10 +31,18 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private Scheduler scheduler;
 
+    @Autowired
+    ScheduleDTOValidator scheduleDTOValidator;
+
     @Override
     public void schedule(ScheduleDTO schedule) {
-        CronTrigger cronTrigger = createTriggerForJob(schedule.getTrigger(), schedule.getJob().getKey());
         try {
+            List<String> errors = scheduleDTOValidator.validateSchedule(schedule);
+            if (!errors.isEmpty()) {
+                throw new MpScheduleException(message.getMessage("schedule.fail"), errors);
+            }
+
+            CronTrigger cronTrigger = createTriggerForJob(schedule.getTrigger(), schedule.getJob().getKey());
             JobDetail jobDetail = this.scheduler.getJobDetail(schedule.getJob().getKey());
             this.scheduler.scheduleJob(cronTrigger);
         } catch (SchedulerException e) {
@@ -47,6 +56,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void unscheduleJob(TriggerDTO trigger) {
         try {
+            List<String> errors = scheduleDTOValidator.validateUnschedule(trigger);
+            if(!errors.isEmpty()){
+                throw new MpScheduleException(message.getMessage("schedule.unschedule.fail"), errors);
+            }
             this.scheduler.unscheduleJob(trigger.getKey());
         } catch (SchedulerException e) {
             String erro = message.getMessage("schedule.unschedule.fail", trigger.getKey().toString());
@@ -61,8 +74,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         List<ScheduleDTO> schedulesDTO = new ArrayList<>();
 
         try {
-            for(String group: this.scheduler.getTriggerGroupNames()) {
-                for(TriggerKey triggerKey : this.scheduler.getTriggerKeys(groupEquals(group))) {
+            for (String group : this.scheduler.getTriggerGroupNames()) {
+                for (TriggerKey triggerKey : this.scheduler.getTriggerKeys(groupEquals(group))) {
                     CronTrigger trigger = (CronTrigger) this.scheduler.getTrigger(triggerKey);
                     JobKey jobKey = trigger.getJobKey();
                     JobDetail jobDetail = this.scheduler.getJobDetail(jobKey);

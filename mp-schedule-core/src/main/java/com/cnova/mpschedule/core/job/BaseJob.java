@@ -10,5 +10,7 @@ public class BaseJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         System.out.println("BaseJob.execute");
         System.out.println(jobExecutionContext.getTrigger().getKey());
+
+        System.out.println(jobExecutionContext.getJobDetail().getKey().toString());
     }
 }
