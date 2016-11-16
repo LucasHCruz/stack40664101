@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.quartz.SchedulerException;
+import org.quartz.TriggerKey;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     public void setUp() throws SchedulerException {
         super.configureScheduler();
 
-        when(message.getMessage(SCHEDULE_FAIL)).thenReturn(SCHEDULE_FAIL);
-        when(message.getMessage(UNSCHEDULE_FAIL)).thenReturn(UNSCHEDULE_FAIL);
+        when(message.getMessage(eq(SCHEDULE_FAIL), any(Object.class))).thenReturn(SCHEDULE_FAIL);
+        when(message.getMessage(eq(UNSCHEDULE_FAIL), any(Object.class))).thenReturn(UNSCHEDULE_FAIL);
         when(message.getMessage(eq(INVALID_CRON_EXPRESSION), any(Object.class))).thenReturn(INVALID_CRON_EXPRESSION);
     }
 
@@ -93,7 +94,9 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testScheduleWithInvalidCronExpression_shouldThrowMpScheduleExceptionWithInvalidCronExpressionMessage(){
+    public void testScheduleWithInvalidCronExpression_shouldThrowMpScheduleExceptionWithInvalidCronExpressionMessage() throws SchedulerException {
+        when(scheduler.checkExists(any(TriggerKey.class))).thenReturn(false);
+
         ScheduleDTO scheduleWithInvalidCronExpression = Fixture.from(ScheduleDTO.class).gimme(ScheduleDTOTemplate.INVALID_CRON_EXPRESSION);
 
         try {

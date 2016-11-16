@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 
 import java.util.List;
@@ -47,9 +48,9 @@ public class JobServiceTest extends QuartzSchedulerTest {
     public void setUp() throws SchedulerException {
         super.configureScheduler();
 
-        when(message.getMessage(eq(JOB_REGISTER_FAIL))).thenReturn(JOB_REGISTER_FAIL);
-        when(message.getMessage(eq(JOB_UPDATE_FAIL))).thenReturn(JOB_UPDATE_FAIL);
-        when(message.getMessage(eq(JOB_DELETE_FAIL))).thenReturn(JOB_DELETE_FAIL);
+        when(message.getMessage(eq(JOB_REGISTER_FAIL), any(Object.class))).thenReturn(JOB_REGISTER_FAIL);
+        when(message.getMessage(eq(JOB_UPDATE_FAIL), any(Object.class))).thenReturn(JOB_UPDATE_FAIL);
+        when(message.getMessage(eq(JOB_DELETE_FAIL), any(Object.class))).thenReturn(JOB_DELETE_FAIL);
         when(message.getMessage(eq(URL_MALFORMED), any(Object.class))).thenReturn(URL_MALFORMED);
     }
 
@@ -92,7 +93,9 @@ public class JobServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void registerJobWithMalformerUrl_shouldThrowMpScheduleExceptionWithMalformedUrlException() {
+    public void registerJobWithMalformerUrl_shouldThrowMpScheduleExceptionWithMalformedUrlException() throws SchedulerException {
+        when(scheduler.checkExists(any(JobKey.class))).thenReturn(false);
+
         JobDetailDTO jobWithMalformedUrl = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.MALFORMED_URL);
         try {
             jobService.registerJob(jobWithMalformedUrl);

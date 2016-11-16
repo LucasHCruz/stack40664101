@@ -8,6 +8,8 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +67,11 @@ public class JobDetailDTOValidator {
             return;
         }
 
-        /*if(!UrlValidator.getInstance().isValid(jobDetailDTO.getUrl())){
+        try{
+            URL url = new URL(jobDetailDTO.getUrl());
+        } catch (MalformedURLException e) {
             errors.add(message.getMessage("job.url.malformed", jobDetailDTO.getUrl()));
-        }*/
+        }
     }
 
     protected void verifyIfJobAlreadyExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
@@ -85,7 +89,7 @@ public class JobDetailDTOValidator {
             //não adiciona nenhum erro, porque o verifyJobKey() já adiciona os erros na lista.
             return;
         }
-        if(scheduler.checkExists(jobDetailDTO.getKey())){
+        if(!scheduler.checkExists(jobDetailDTO.getKey())){
             errors.add(message.getMessage("job.not.exists", jobDetailDTO.getKey().toString()));
         }
     }
