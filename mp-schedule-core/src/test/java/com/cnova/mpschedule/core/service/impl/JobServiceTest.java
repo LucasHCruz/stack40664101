@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -32,6 +33,7 @@ public class JobServiceTest extends QuartzSchedulerTest {
     public static final String JOB_REGISTER_FAIL = "job.register.fail";
     public static final String JOB_UPDATE_FAIL = "job.update.fail";
     public static final String JOB_DELETE_FAIL = "job.delete.fail";
+    public static final String URL_MALFORMED = "job.url.malformed";
 
     @InjectMocks
     JobServiceImpl jobService;
@@ -48,6 +50,7 @@ public class JobServiceTest extends QuartzSchedulerTest {
         when(message.getMessage(eq(JOB_REGISTER_FAIL))).thenReturn(JOB_REGISTER_FAIL);
         when(message.getMessage(eq(JOB_UPDATE_FAIL))).thenReturn(JOB_UPDATE_FAIL);
         when(message.getMessage(eq(JOB_DELETE_FAIL))).thenReturn(JOB_DELETE_FAIL);
+        when(message.getMessage(eq(URL_MALFORMED), any(Object.class))).thenReturn(URL_MALFORMED);
     }
 
     @Test
@@ -61,7 +64,7 @@ public class JobServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void registerJobWithoutValues_shouldReturnMpScheduleExceptionWithThreeRequiredFieldMessage() {
+    public void registerJobWithoutValues_shouldThrowMpScheduleExceptionWithThreeRequiredFieldMessage() {
         JobDetailDTO jobWithoutJobName = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.WITHOUT_VALUES);
 
         try {
@@ -75,7 +78,7 @@ public class JobServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void updateJobWithoutValues_shouldReturnMpScheduleExceptionWithThreeRequiredFieldMessage() {
+    public void updateJobWithoutValues_shouldThrowMpScheduleExceptionWithThreeRequiredFieldMessage() {
         JobDetailDTO jobWithoutValues = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.WITHOUT_VALUES);
 
         try {
@@ -89,7 +92,20 @@ public class JobServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void deleteJobWithoutValues_shouldReturnMpScheduleExceptionWithTwoRequiredFieldMessage() {
+    public void registerJobWithMalformerUrl_shouldThrowMpScheduleExceptionWithMalformedUrlException() {
+        JobDetailDTO jobWithMalformedUrl = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.MALFORMED_URL);
+        try {
+            jobService.registerJob(jobWithMalformedUrl);
+        } catch (MpScheduleException e) {
+            assertEquals(JOB_REGISTER_FAIL, e.getMessage());
+            assertThat(e.getReasons(), contains(URL_MALFORMED));
+            assertThat(e.getReasons(), hasSize(1));
+            throw e;
+        }
+    }
+
+    @Test(expected = MpScheduleException.class)
+    public void deleteJobWithoutValues_shouldThrowMpScheduleExceptionWithTwoRequiredFieldMessage() {
         JobDetailDTO jobWithoutValues = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.WITHOUT_VALUES);
 
         try {

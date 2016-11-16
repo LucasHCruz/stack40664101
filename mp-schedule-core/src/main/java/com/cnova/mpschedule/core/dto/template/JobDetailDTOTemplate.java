@@ -11,6 +11,7 @@ public class JobDetailDTOTemplate implements TemplateLoader{
     public static final String WITHOUT_JOB_NAME = "WITHOUT_JOB_NAME";
     public static final String WITHOUT_GROUP_NAME_AND_JOB_NAME = "WITHOUT_GROUP_NAME_AND_JOB_NAME";
     public static final String WITHOUT_VALUES = "WITHOUT_VALUES";
+    public static final String MALFORMED_URL = "MALFORMED_URL";
 
     @Override
     public void load() {
@@ -33,6 +34,10 @@ public class JobDetailDTOTemplate implements TemplateLoader{
             add("groupName", null);
             add("jobName", null);
             add("url", null);
+        }});
+
+        Fixture.of(JobDetailDTO.class).addTemplate(MALFORMED_URL).inherits(VALID, new Rule(){{
+            add("url", "malformed url ( ͡° ͜ʖ ͡°)");
         }});
     }
 }

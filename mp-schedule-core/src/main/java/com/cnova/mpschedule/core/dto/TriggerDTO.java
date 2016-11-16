@@ -1,6 +1,7 @@
 package com.cnova.mpschedule.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.MoreObjects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,5 +32,13 @@ public class TriggerDTO {
         this.triggerName = trigger.getKey().getName();
         this.groupName = trigger.getKey().getGroup();
         this.cronExpression = trigger.getCronExpression();
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper("trigger")
+                .add("triggerName", triggerName)
+                .add("groupName", groupName)
+                .toString();
     }
 }

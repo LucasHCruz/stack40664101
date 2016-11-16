@@ -33,13 +33,13 @@ public class ScheduleDTOValidator {
 
         if(schedule.getJob() != null) {
             jobDetailDTOValidator.verifyJobKey(schedule.getJob(), errors);
-            jobDetailDTOValidator.verifyIfJobExists(schedule.getJob(), errors);
+            jobDetailDTOValidator.verifyIfJobNotExists(schedule.getJob(), errors);
         }
 
         if(schedule.getTrigger() != null) {
             triggerDTOValidator.verifyTriggerKey(schedule.getTrigger(), errors);
             triggerDTOValidator.verifyCronExpression(schedule.getTrigger(), errors);
-            triggerDTOValidator.verifyIfTriggerExists(schedule.getTrigger(), errors);
+            triggerDTOValidator.verifyIfTriggerAlreadyExists(schedule.getTrigger(), errors);
         }
 
         return errors;
@@ -49,12 +49,12 @@ public class ScheduleDTOValidator {
         List<String> errors = new ArrayList<>();
 
         triggerDTOValidator.verifyTriggerKey(trigger, errors);
-        triggerDTOValidator.verifyIfTriggerExists(trigger, errors);
+        triggerDTOValidator.verifyIfTriggerNotExists(trigger, errors);
 
         return errors;
     }
 
-    private void verifyScheduleFields(ScheduleDTO schedule, List<String> errors) {
+    protected void verifyScheduleFields(ScheduleDTO schedule, List<String> errors) {
         if(schedule.getTrigger() == null){
             errors.add(message.getMessage("required.field", "trigger"));
         }

@@ -61,7 +61,7 @@ public class JobServiceImpl implements JobService {
         try {
             List<String> errors = jobDetailDTOValidator.validateRegisterJob(job);
             if (!errors.isEmpty()) {
-                throw new MpScheduleException(message.getMessage("job.register.fail"), errors);
+                throw new MpScheduleException(message.getMessage("job.register.fail", job), errors);
             }
             JobDetail jobDetail = createJobDetail(job);
             this.scheduler.addJob(jobDetail, false);
@@ -77,7 +77,7 @@ public class JobServiceImpl implements JobService {
         try {
             List<String> errors = jobDetailDTOValidator.validateUpdateJob(job);
             if (!errors.isEmpty()) {
-                throw new MpScheduleException(message.getMessage("job.update.fail"), errors);
+                throw new MpScheduleException(message.getMessage("job.update.fail", job), errors);
             }
             JobDetail jobDetail = createJobDetail(job);
             if (!this.scheduler.checkExists(job.getKey())) {
@@ -97,7 +97,7 @@ public class JobServiceImpl implements JobService {
         try {
             List<String> errors = jobDetailDTOValidator.validateDeleteUpdateJob(job);
             if (!errors.isEmpty()) {
-                throw new MpScheduleException(message.getMessage("job.delete.fail"), errors);
+                throw new MpScheduleException(message.getMessage("job.delete.fail", job), errors);
             }
             this.scheduler.deleteJob(job.getKey());
         } catch (SchedulerException e) {

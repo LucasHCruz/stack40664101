@@ -35,7 +35,7 @@ public class JobDetailDTOValidator {
 
         verifyJobKey(jobDetailDTO, errors);
         verifyUrl(jobDetailDTO, errors);
-        verifyIfJobExists(jobDetailDTO, errors);
+        verifyIfJobNotExists(jobDetailDTO, errors);
 
         return errors;
     }
@@ -44,7 +44,7 @@ public class JobDetailDTOValidator {
         List<String> errors = new ArrayList<>();
 
         verifyJobKey(jobDetailDTO, errors);
-        verifyIfJobExists(jobDetailDTO, errors);
+        verifyIfJobNotExists(jobDetailDTO, errors);
 
         return errors;
     }
@@ -62,7 +62,12 @@ public class JobDetailDTOValidator {
     protected void verifyUrl(JobDetailDTO jobDetailDTO, List<String> errors) {
         if(Strings.isNullOrEmpty(jobDetailDTO.getUrl())){
             errors.add(message.getMessage("required.field", "url"));
+            return;
         }
+
+        /*if(!UrlValidator.getInstance().isValid(jobDetailDTO.getUrl())){
+            errors.add(message.getMessage("job.url.malformed", jobDetailDTO.getUrl()));
+        }*/
     }
 
     protected void verifyIfJobAlreadyExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
@@ -75,12 +80,12 @@ public class JobDetailDTOValidator {
         }
     }
 
-    protected void verifyIfJobExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
+    protected void verifyIfJobNotExists(JobDetailDTO jobDetailDTO, List<String> errors) throws SchedulerException {
         if(Strings.isNullOrEmpty(jobDetailDTO.getGroupName()) || Strings.isNullOrEmpty(jobDetailDTO.getJobName())){
             //não adiciona nenhum erro, porque o verifyJobKey() já adiciona os erros na lista.
             return;
         }
-        if(!scheduler.checkExists(jobDetailDTO.getKey())){
+        if(scheduler.checkExists(jobDetailDTO.getKey())){
             errors.add(message.getMessage("job.not.exists", jobDetailDTO.getKey().toString()));
         }
     }

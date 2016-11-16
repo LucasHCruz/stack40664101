@@ -39,7 +39,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             List<String> errors = scheduleDTOValidator.validateSchedule(schedule);
             if (!errors.isEmpty()) {
-                throw new MpScheduleException(message.getMessage("schedule.fail"), errors);
+                throw new MpScheduleException(message.getMessage("schedule.fail", schedule.getJob()), errors);
             }
 
             CronTrigger cronTrigger = createTriggerForJob(schedule.getTrigger(), schedule.getJob().getKey());
@@ -58,7 +58,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             List<String> errors = scheduleDTOValidator.validateUnschedule(trigger);
             if(!errors.isEmpty()){
-                throw new MpScheduleException(message.getMessage("schedule.unschedule.fail"), errors);
+                throw new MpScheduleException(message.getMessage("schedule.unschedule.fail", trigger), errors);
             }
             this.scheduler.unscheduleJob(trigger.getKey());
         } catch (SchedulerException e) {

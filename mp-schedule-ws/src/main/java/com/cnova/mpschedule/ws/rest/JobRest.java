@@ -60,4 +60,9 @@ public class JobRest {
         jobService.deleteJob(job);
     }
 
+    @RequestMapping(path = "teste", method = RequestMethod.GET)
+    public void teste(){
+        System.out.println("teste");
+    }
+
 }

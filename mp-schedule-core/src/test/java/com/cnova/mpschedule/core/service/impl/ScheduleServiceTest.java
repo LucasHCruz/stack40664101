@@ -63,7 +63,7 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testScheduleWithoutValues_shouldReturnMpScheduleExceptionWithTwoRequiredFieldMessage() {
+    public void testScheduleWithoutValues_shouldThrowMpScheduleExceptionWithTwoRequiredFieldMessage() {
         ScheduleDTO scheduleWithoutValues = Fixture.from(ScheduleDTO.class).gimme(ScheduleDTOTemplate.WITHOUT_VALUES);
 
         try {
@@ -78,7 +78,7 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testScheduleWithoutTriggerAndJobValues_shouldReturnMpScheduleExceptionWithFiveRequiredFieldMessage() {
+    public void testScheduleWithoutTriggerAndJobValues_shouldThrowMpScheduleExceptionWithFiveRequiredFieldMessage() {
         ScheduleDTO scheduleWithoutTriggerAndJobValues = Fixture.from(ScheduleDTO.class).gimme(ScheduleDTOTemplate.WITHOUT_TRIGGER_AND_JOB_VALUES);
 
         try {
@@ -93,7 +93,7 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testScheduleWithInvalidCronExpression_shouldReturnMpScheduleExceptionWithInvalidCronExpressionMessage(){
+    public void testScheduleWithInvalidCronExpression_shouldThrowMpScheduleExceptionWithInvalidCronExpressionMessage(){
         ScheduleDTO scheduleWithInvalidCronExpression = Fixture.from(ScheduleDTO.class).gimme(ScheduleDTOTemplate.INVALID_CRON_EXPRESSION);
 
         try {
@@ -108,7 +108,7 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testUnscheduleJobWithTriggerWithoutValues_shouldReturnMpScheduleExceptionWithTwoRequiredFieldMessage(){
+    public void testUnscheduleJobWithTriggerWithoutValues_shouldThrowMpScheduleExceptionWithTwoRequiredFieldMessage(){
         TriggerDTO triggerWithoutValues = Fixture.from(TriggerDTO.class).gimme(TriggerDTOTemplate.WITHOUT_VALUES);
 
         try {

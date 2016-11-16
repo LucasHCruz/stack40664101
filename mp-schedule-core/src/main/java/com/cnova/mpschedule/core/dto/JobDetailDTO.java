@@ -2,6 +2,7 @@ package com.cnova.mpschedule.core.dto;
 
 import com.cnova.mpschedule.core.util.helper.JobDataHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.MoreObjects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -32,5 +33,13 @@ public class JobDetailDTO {
         this.jobName = jobDetail.getKey().getName();
         this.groupName = jobDetail.getKey().getGroup();
         this.url = jobDetail.getJobDataMap().getString(JobDataHelper.URL_DATA);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper("job")
+                .add("jobName", jobName)
+                .add("groupName", groupName)
+                .toString();
     }
 }

@@ -31,9 +31,17 @@ public class TriggerDTOValidator {
         }
     }
 
-    protected void verifyIfTriggerExists(TriggerDTO triggerDTO, List<String> errors) throws SchedulerException {
+    protected void verifyIfTriggerAlreadyExists(TriggerDTO triggerDTO, List<String> errors) throws SchedulerException {
         if(Strings.isNullOrEmpty(triggerDTO.getGroupName()) || Strings.isNullOrEmpty(triggerDTO.getTriggerName())){
-            //não adiciona nenhum erro, porque o verifyTriggerKey() já adiciona os erros na lista.
+            return;
+        }
+        if(scheduler.checkExists(triggerDTO.getKey())){
+            errors.add(message.getMessage("trigger.already.exists", triggerDTO.getKey().toString()));
+        }
+    }
+
+    protected void verifyIfTriggerNotExists(TriggerDTO triggerDTO, List<String> errors) throws SchedulerException {
+        if(Strings.isNullOrEmpty(triggerDTO.getGroupName()) || Strings.isNullOrEmpty(triggerDTO.getTriggerName())){
             return;
         }
         if(!scheduler.checkExists(triggerDTO.getKey())){

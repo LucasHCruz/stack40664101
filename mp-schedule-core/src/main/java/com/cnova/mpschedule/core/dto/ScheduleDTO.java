@@ -1,5 +1,6 @@
 package com.cnova.mpschedule.core.dto;
 
+import com.google.common.base.MoreObjects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,5 +23,13 @@ public class ScheduleDTO {
     public ScheduleDTO(CronTrigger trigger, JobDetail jobDetail) {
         this.trigger = new TriggerDTO(trigger);
         this.job = new JobDetailDTO(jobDetail);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper("schedule")
+                .add("trigger", trigger)
+                .add("job", job)
+                .toString();
     }
 }
