@@ -6,3 +6,7 @@ spring:
         uri: https://ws-config.cnova.com.br
         label: mp-local
         enabled: false
+
+eureka:
+  instance:
+    appname: ${spring.application.name}       
