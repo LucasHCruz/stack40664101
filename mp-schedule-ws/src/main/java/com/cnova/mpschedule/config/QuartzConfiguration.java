@@ -1,4 +1,4 @@
-package com.cnova.mpschedule.app;
+package com.cnova.mpschedule.config;
 
 import com.cnova.mpschedule.core.factory.AutowiringSpringBeanJobFactory;
 import org.quartz.spi.JobFactory;
@@ -7,8 +7,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
-import java.util.Properties;
 
 @Configuration 
 public class QuartzConfiguration {
@@ -42,15 +40,17 @@ public class QuartzConfiguration {
         factory.setOverwriteExistingJobs(true);
         factory.setJobFactory(jobFactory(applicationContext));
 
-        Properties quartzProperties = new Properties();
+        /*Properties quartzProperties = new Properties();
 
         quartzProperties.setProperty("org.quartz.jobStore.class", this.jobStoreClass);
-        quartzProperties.setProperty("org.quartz.jobStore.mongoUri", this.mongoUri);
-        quartzProperties.setProperty("org.quartz.jobStore.dbName", this.dbName);
-        quartzProperties.setProperty("org.quartz.jobStore.collectionPrefix", this.collectionPrefix);
-        quartzProperties.setProperty("org.quartz.jobStore.jobDataAsBase64", this.jobDataAsBase64);
-        quartzProperties.setProperty("org.quartz.threadPool.threadCount", this.threadCount);
-        factory.setQuartzProperties(quartzProperties);
+        if(this.jobStoreClass.contains("MongoDBJobStore")) {
+            quartzProperties.setProperty("org.quartz.jobStore.mongoUri", this.mongoUri);
+            quartzProperties.setProperty("org.quartz.jobStore.dbName", this.dbName);
+            quartzProperties.setProperty("org.quartz.jobStore.collectionPrefix", this.collectionPrefix);
+            quartzProperties.setProperty("org.quartz.jobStore.jobDataAsBase64", this.jobDataAsBase64);
+            quartzProperties.setProperty("org.quartz.threadPool.threadCount", this.threadCount);
+        }
+        factory.setQuartzProperties(quartzProperties);*/
 
         return factory;
     }

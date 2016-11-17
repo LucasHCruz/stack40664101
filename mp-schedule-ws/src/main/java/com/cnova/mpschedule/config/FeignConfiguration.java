@@ -1,4 +1,4 @@
-package com.cnova.mpschedule.app;
+package com.cnova.mpschedule.config;
 
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;

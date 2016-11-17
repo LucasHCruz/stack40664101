@@ -1,4 +1,4 @@
-package com.cnova.mpschedule.app;
+package com.cnova.mpschedule.config;
 
 import org.ff4j.FF4j;
 import org.ff4j.core.Feature;

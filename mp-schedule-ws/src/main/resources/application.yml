@@ -54,7 +54,7 @@ ff4j:
 org:
     quartz:
         jobStore:
-            class: com.novemberain.quartz.mongodb.MongoDBJobStore
+            class: @quartz.store@
             mongoUri: @mongo.connection@
             dbName: mp-schedule
             collectionPrefix: quartz
