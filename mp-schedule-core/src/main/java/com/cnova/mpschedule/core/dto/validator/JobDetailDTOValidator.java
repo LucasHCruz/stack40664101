@@ -22,12 +22,17 @@ public class JobDetailDTOValidator {
     @Autowired
     Scheduler scheduler;
 
+    @Autowired
+    CommonsValidator commonsValidator;
+
     public List<String> validateRegisterJob(JobDetailDTO jobDetailDTO) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
-        verifyJobKey(jobDetailDTO, errors);
-        verifyUrl(jobDetailDTO, errors);
-        verifyIfJobAlreadyExists(jobDetailDTO, errors);
+        if(commonsValidator.objectIsNotNull(jobDetailDTO, "job",errors)) {
+            verifyJobKey(jobDetailDTO, errors);
+            verifyUrl(jobDetailDTO, errors);
+            verifyIfJobAlreadyExists(jobDetailDTO, errors);
+        }
 
         return errors;
     }
@@ -35,9 +40,11 @@ public class JobDetailDTOValidator {
     public List<String> validateUpdateJob(JobDetailDTO jobDetailDTO) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
-        verifyJobKey(jobDetailDTO, errors);
-        verifyUrl(jobDetailDTO, errors);
-        verifyIfJobNotExists(jobDetailDTO, errors);
+        if(commonsValidator.objectIsNotNull(jobDetailDTO, "job",errors)) {
+            verifyJobKey(jobDetailDTO, errors);
+            verifyUrl(jobDetailDTO, errors);
+            verifyIfJobNotExists(jobDetailDTO, errors);
+        }
 
         return errors;
     }
@@ -45,8 +52,10 @@ public class JobDetailDTOValidator {
     public List<String> validateDeleteUpdateJob(JobDetailDTO jobDetailDTO) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
-        verifyJobKey(jobDetailDTO, errors);
-        verifyIfJobNotExists(jobDetailDTO, errors);
+        if(commonsValidator.objectIsNotNull(jobDetailDTO, "job",errors)) {
+            verifyJobKey(jobDetailDTO, errors);
+            verifyIfJobNotExists(jobDetailDTO, errors);
+        }
 
         return errors;
     }

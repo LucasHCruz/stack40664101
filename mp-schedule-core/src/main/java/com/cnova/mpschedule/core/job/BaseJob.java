@@ -2,14 +2,16 @@ package com.cnova.mpschedule.core.job;
 
 import com.cnova.mpschedule.core.integration.BaseClient;
 import com.cnova.mpschedule.core.util.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Slf4j
 public class BaseJob implements Job {
 
-    private static final String URL_DATA = "url";
+    public static final String URL_DATA = "url";
 
     @Autowired
     BaseClient baseClient;
@@ -23,7 +25,7 @@ public class BaseJob implements Job {
         String url;
         url = jobExecutionContext.getJobDetail().getJobDataMap().getString(URL_DATA);
 
-        System.out.println("Chamando a url: " + url);
+        log.info("Chamando a url: {}", url);
 
         baseClient.call(url);
     }

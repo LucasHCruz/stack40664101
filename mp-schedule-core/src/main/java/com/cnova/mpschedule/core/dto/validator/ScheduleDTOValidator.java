@@ -26,20 +26,24 @@ public class ScheduleDTOValidator {
     @Autowired
     TriggerDTOValidator triggerDTOValidator;
 
+    @Autowired
+    CommonsValidator commonsValidator;
+
     public List<String> validateSchedule(ScheduleDTO schedule) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
-        verifyScheduleFields(schedule, errors);
 
-        if(schedule.getJob() != null) {
-            jobDetailDTOValidator.verifyJobKey(schedule.getJob(), errors);
-            jobDetailDTOValidator.verifyIfJobNotExists(schedule.getJob(), errors);
-        }
+        if (commonsValidator.objectIsNotNull(schedule, "schedule", errors)) {
+            if (commonsValidator.objectIsNotNull(schedule.getJob(), "job", errors)) {
+                jobDetailDTOValidator.verifyJobKey(schedule.getJob(), errors);
+                jobDetailDTOValidator.verifyIfJobNotExists(schedule.getJob(), errors);
+            }
 
-        if(schedule.getTrigger() != null) {
-            triggerDTOValidator.verifyTriggerKey(schedule.getTrigger(), errors);
-            triggerDTOValidator.verifyCronExpression(schedule.getTrigger(), errors);
-            triggerDTOValidator.verifyIfTriggerAlreadyExists(schedule.getTrigger(), errors);
+            if (commonsValidator.objectIsNotNull(schedule.getTrigger(), "trigger", errors)) {
+                triggerDTOValidator.verifyTriggerKey(schedule.getTrigger(), errors);
+                triggerDTOValidator.verifyCronExpression(schedule.getTrigger(), errors);
+                triggerDTOValidator.verifyIfTriggerAlreadyExists(schedule.getTrigger(), errors);
+            }
         }
 
         return errors;
@@ -48,18 +52,11 @@ public class ScheduleDTOValidator {
     public List<String> validateUnschedule(TriggerDTO trigger) throws SchedulerException {
         List<String> errors = new ArrayList<>();
 
-        triggerDTOValidator.verifyTriggerKey(trigger, errors);
-        triggerDTOValidator.verifyIfTriggerNotExists(trigger, errors);
+        if (commonsValidator.objectIsNotNull(trigger, "trigger", errors)) {
+            triggerDTOValidator.verifyTriggerKey(trigger, errors);
+            triggerDTOValidator.verifyIfTriggerNotExists(trigger, errors);
+        }
 
         return errors;
-    }
-
-    protected void verifyScheduleFields(ScheduleDTO schedule, List<String> errors) {
-        if(schedule.getTrigger() == null){
-            errors.add(message.getMessage("required.field", "trigger"));
-        }
-        if(schedule.getJob() == null){
-            errors.add(message.getMessage("required.field", "job"));
-        }
     }
 }
