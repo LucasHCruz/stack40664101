@@ -1,5 +1,6 @@
 package com.cnova.mpschedule.core.service.impl;
 
+import com.cnova.mpschedule.core.dto.validator.CommonsValidator;
 import com.cnova.mpschedule.core.dto.validator.JobDetailDTOValidator;
 import com.cnova.mpschedule.core.dto.validator.ScheduleDTOValidator;
 import com.cnova.mpschedule.core.dto.validator.TriggerDTOValidator;
@@ -23,12 +24,17 @@ import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 public class QuartzSchedulerTest {
 
     public static final String REQUIRED_FIELD = "required.field";
+    public static final String REQUIRED_OBJECT = "required.object";
 
     @Mock
     Scheduler scheduler;
 
     @Mock
     Message message;
+
+    @Spy
+    @InjectMocks
+    CommonsValidator commonsValidator;
 
     @Spy
     @InjectMocks
@@ -62,5 +68,6 @@ public class QuartzSchedulerTest {
         when(scheduler.checkExists(any(TriggerKey.class))).thenReturn(true);
 
         when(message.getMessage(eq(REQUIRED_FIELD), any(Object.class))).thenReturn(REQUIRED_FIELD);
+        when(message.getMessage(eq(REQUIRED_OBJECT), any(Object.class))).thenReturn(REQUIRED_OBJECT);
     }
 }

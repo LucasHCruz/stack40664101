@@ -39,7 +39,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             List<String> errors = scheduleDTOValidator.validateSchedule(schedule);
             if (!errors.isEmpty()) {
-                throw new MpScheduleException(message.getMessage("schedule.fail", schedule.getJob()), errors);
+                throw new MpScheduleException(message.getMessage("schedule.fail", schedule), errors);
             }
 
             CronTrigger cronTrigger = createTriggerForJob(schedule.getTrigger(), schedule.getJob().getKey());
