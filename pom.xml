@@ -44,7 +44,7 @@
         <spring-boot-data-mongodb.version>1.4.0.RELEASE</spring-boot-data-mongodb.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
         <mongo-java-driver.version>2.13.3</mongo-java-driver.version>
-        <start-class>com.cnova.mpschedule.config.Application</start-class>
+        <start-class>com.cnova.mpschedule.Application</start-class>
         <springfox-swagger.version>2.6.0</springfox-swagger.version>
         <spring-boot-starter-test>1.4.0.RELEASE</spring-boot-starter-test>
         <spring-context-support.version>4.3.3.RELEASE</spring-context-support.version>
