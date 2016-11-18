@@ -28,7 +28,6 @@
             <groupId>com.cnova</groupId>
             <artifactId>mp-schedule-ws</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Test -->
@@ -58,6 +57,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
                 <executions>
                     <execution>
                         <id>integration-test</id>
