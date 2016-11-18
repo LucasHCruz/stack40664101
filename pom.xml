@@ -10,7 +10,7 @@
     <modules>
         <module>mp-schedule-core</module>
         <module>mp-schedule-ws</module>
-         <module>mp-schedule-integration-test</module>
+        <!-- <module>mp-schedule-integration-test</module> -->
     </modules>
 
     <parent>
@@ -27,6 +27,8 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <maven.build.timestamp.format>dd-MM-yyyy</maven.build.timestamp.format>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
         <querydsl>4.1.4</querydsl>
 
