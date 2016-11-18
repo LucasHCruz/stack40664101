@@ -1,4 +1,4 @@
-package com.cnova.mpschedule;
+package com.cnova.mpschedule.config;
 
 import com.cnova.mpschedule.config.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

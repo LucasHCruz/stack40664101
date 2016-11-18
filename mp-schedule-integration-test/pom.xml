@@ -26,6 +26,11 @@
         <!-- Projects CNova -->
         <dependency>
             <groupId>com.cnova</groupId>
+            <artifactId>mp-schedule-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cnova</groupId>
             <artifactId>mp-schedule-ws</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
