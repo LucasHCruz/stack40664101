@@ -1,4 +1,4 @@
-package com.cnova.mpschedule.app;
+package com.cnova.mpschedule.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

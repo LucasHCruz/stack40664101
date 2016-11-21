@@ -65,6 +65,20 @@ public class JobServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
+    public void registerJobWithNullJob_shouldThrowMpScheduleExceptionWithRequiredObjectMessage() {
+        JobDetailDTO nullJob = null;
+
+        try {
+            jobService.registerJob(nullJob);
+        } catch (MpScheduleException e) {
+            assertEquals(JOB_REGISTER_FAIL, e.getMessage());
+            assertThat(e.getReasons(), contains(REQUIRED_OBJECT));
+            assertThat(e.getReasons(), hasSize(1));
+            throw e;
+        }
+    }
+
+    @Test(expected = MpScheduleException.class)
     public void registerJobWithoutValues_shouldThrowMpScheduleExceptionWithThreeRequiredFieldMessage() {
         JobDetailDTO jobWithoutJobName = Fixture.from(JobDetailDTO.class).gimme(JobDetailDTOTemplate.WITHOUT_VALUES);
 
@@ -74,6 +88,20 @@ public class JobServiceTest extends QuartzSchedulerTest {
             assertEquals(JOB_REGISTER_FAIL, e.getMessage());
             assertThat(e.getReasons(), contains(REQUIRED_FIELD, REQUIRED_FIELD, REQUIRED_FIELD));
             assertThat(e.getReasons(), hasSize(3));
+            throw e;
+        }
+    }
+
+    @Test(expected = MpScheduleException.class)
+    public void updateJobWithNullJob_shouldThrowMpScheduleExceptionWithRequiredObjectMessage() {
+        JobDetailDTO nullJob = null;
+
+        try {
+            jobService.updateJob(nullJob);
+        } catch (MpScheduleException e) {
+            assertEquals(JOB_UPDATE_FAIL, e.getMessage());
+            assertThat(e.getReasons(), contains(REQUIRED_OBJECT));
+            assertThat(e.getReasons(), hasSize(1));
             throw e;
         }
     }
@@ -102,6 +130,20 @@ public class JobServiceTest extends QuartzSchedulerTest {
         } catch (MpScheduleException e) {
             assertEquals(JOB_REGISTER_FAIL, e.getMessage());
             assertThat(e.getReasons(), contains(URL_MALFORMED));
+            assertThat(e.getReasons(), hasSize(1));
+            throw e;
+        }
+    }
+
+    @Test(expected = MpScheduleException.class)
+    public void deleteJobWithNullJob_shouldThrowMpScheduleExceptionWithRequiredObjectMessage() {
+        JobDetailDTO nullJob = null;
+
+        try {
+            jobService.deleteJob(nullJob);
+        } catch (MpScheduleException e) {
+            assertEquals(JOB_DELETE_FAIL, e.getMessage());
+            assertThat(e.getReasons(), contains(REQUIRED_OBJECT));
             assertThat(e.getReasons(), hasSize(1));
             throw e;
         }

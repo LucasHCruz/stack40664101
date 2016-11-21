@@ -12,11 +12,11 @@ public class CommonsValidator {
     @Autowired
     Message message;
 
-    public boolean objectIsNotNull(Object object, String attribute, List<String> errors) {
+    public boolean objectIsNotNull(Object object, String objeto, List<String> errors) {
         boolean isNotNull = true;
 
         if(object == null){
-            errors.add(message.getMessage("required.field", attribute));
+            errors.add(message.getMessage("required.object", objeto));
             isNotNull = false;
         }
         return isNotNull;

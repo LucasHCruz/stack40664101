@@ -1,4 +1,4 @@
-package com.cnova.mpschedule.app;
+package com.cnova.mpschedule.config;
 
 import java.util.Locale;
 

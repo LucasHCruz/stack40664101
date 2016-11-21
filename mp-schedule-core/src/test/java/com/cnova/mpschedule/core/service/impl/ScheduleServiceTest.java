@@ -64,14 +64,29 @@ public class ScheduleServiceTest extends QuartzSchedulerTest {
     }
 
     @Test(expected = MpScheduleException.class)
-    public void testScheduleWithoutValues_shouldThrowMpScheduleExceptionWithTwoRequiredFieldMessage() {
+    public void testScheduleWithNullSchedule_shouldThrowMpScheduleExceptionWithOneRequiredObjectMessage() {
+        ScheduleDTO nullSchedule = null;
+
+        try {
+            scheduleService.schedule(nullSchedule);
+        } catch (MpScheduleException e) {
+            assertEquals(SCHEDULE_FAIL, e.getMessage());
+            assertThat(e.getReasons(), contains(REQUIRED_OBJECT));
+            assertThat(e.getReasons(), hasSize(1));
+
+            throw e;
+        }
+    }
+
+    @Test(expected = MpScheduleException.class)
+    public void testScheduleWithoutValues_shouldThrowMpScheduleExceptionWithTwoRequiredObjectMessage() {
         ScheduleDTO scheduleWithoutValues = Fixture.from(ScheduleDTO.class).gimme(ScheduleDTOTemplate.WITHOUT_VALUES);
 
         try {
             scheduleService.schedule(scheduleWithoutValues);
         } catch (MpScheduleException e) {
             assertEquals(SCHEDULE_FAIL, e.getMessage());
-            assertThat(e.getReasons(), contains(REQUIRED_FIELD, REQUIRED_FIELD));
+            assertThat(e.getReasons(), contains(REQUIRED_OBJECT, REQUIRED_OBJECT));
             assertThat(e.getReasons(), hasSize(2));
 
             throw e;
