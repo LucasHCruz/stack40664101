@@ -31,6 +31,7 @@
     	<maven.compiler.target>1.8</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
         <querydsl>4.1.4</querydsl>
+        <mockito.all.version>1.10.19</mockito.all.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
@@ -209,7 +210,11 @@
                 <artifactId>fixture-factory</artifactId>
                 <version>${fixture-factory.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.all.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -308,7 +313,7 @@
         <repository>
             <id>dev-nexus</id>
             <name>CNova Nexus</name>
-            <url>http://dev.nexus.marketplace.dc.nova/nexus</url>
+            <url>http://dev.nexus/nexus/content/groups/public/</url>
         </repository>
 
     </repositories>
