@@ -31,12 +31,14 @@
     	<maven.compiler.target>1.8</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
         <querydsl>4.1.4</querydsl>
+        <mockito.all.version>1.10.19</mockito.all.version>
 
         <commons-lang3.version>3.4</commons-lang3.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <ff4j.version>1.5</ff4j.version>
         <quartz.version>2.2.1</quartz.version>
+        <quartz.mongo.version>1.9.0</quartz.mongo.version>
         <hamcrest.version>1.3</hamcrest.version>
         <apache.validator.version>1.5.1</apache.validator.version>
         <apache.httpcomponents.version>4.5.2</apache.httpcomponents.version>
@@ -182,7 +184,7 @@
             <dependency>
                 <groupId>com.novemberain</groupId>
                 <artifactId>quartz-mongodb</artifactId>
-                <version>2.0.0</version>
+                <version>${quartz.mongo.version}</version>
             </dependency>
 
             <!-- tests -->
@@ -208,7 +210,11 @@
                 <artifactId>fixture-factory</artifactId>
                 <version>${fixture-factory.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.all.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -305,16 +311,11 @@
     <repositories>
         <!-- Spring -->
         <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/libs-release</url>
+            <id>dev-nexus</id>
+            <name>CNova Nexus</name>
+            <url>http://dev.nexus/nexus/content/groups/public/</url>
         </repository>
 
-        <!-- Quartz-MongoJobStore -->
-        <repository>
-            <id>michaelklishin</id>
-            <url>https://dl.bintray.com/michaelklishin/maven/</url>
-        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
