@@ -311,9 +311,9 @@
     <repositories>
         <!-- Spring -->
         <repository>
-            <id>dev-nexus</id>
-            <name>CNova Nexus</name>
-            <url>http://dev.nexus/nexus/content/groups/public/</url>
+            <id>Clojars Repo</id>
+            <name>Clojars Repo</name>
+            <url>https://clojars.org/repo/</url>
         </repository>
 
     </repositories>
