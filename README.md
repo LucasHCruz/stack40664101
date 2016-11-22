@@ -1,12 +1,7 @@
-
-# mp-schedule(JOELMA) - CNova
-
-**Documentation:** https://mktplace.atlassian.net/wiki/display/PROJ/MP-SCHEDULE
-
 **Swagger-ui-endpoint**: /swagger-ui.html
 
 ## Objective
-This project is responsible for schedule services of Marketplace.
+This project is responsible for schedule services.
 
 ## Tecnologies
 * SpringCloud
@@ -58,12 +53,6 @@ mvn jgitflow:hotfix-finish
 mvn jgitflow:release-start
 mvn jgitflow:release-finish
 ```
-
-## Jenkins
-* [Status dos build e deploy](http://dev.jenkins/view/MONITOR/)
-* [Ordem de execução dos jobs](http://dev.jenkins/view/PIPELINES/)
-* [Jobs marketplace](http://dev.jenkins/view/Marketplace/)
-
 
 ## Editor Config
 http://editorconfig.org/
